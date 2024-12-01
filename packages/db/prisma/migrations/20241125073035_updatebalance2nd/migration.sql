@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Balance" ALTER COLUMN "amount" DROP DEFAULT,
+ALTER COLUMN "locked" DROP DEFAULT;
