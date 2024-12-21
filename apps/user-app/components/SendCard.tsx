@@ -11,49 +11,47 @@ const SendCard = () => {
   const [amount, setamount] = useState("");
   return (
     <div className=" h-[90vh] ">
-      <Center>
-        <Card title="Send Money">
-          <div className=" min-w-72">
-            <TextInput
-              placeholder={"9876543567"}
-              label="Phone Number"
-              onChange={(value) => {
-                setnumber(value);
+      <Card title="Send Money">
+        <div className=" min-w-72">
+          <TextInput
+            placeholder={"9876543567"}
+            label="Phone Number"
+            onChange={(value) => {
+              setnumber(value);
+            }}
+            value={number}
+          />
+          <TextInput
+            placeholder={"Amount"}
+            label="Amount"
+            onChange={(value) => {
+              setamount(value);
+            }}
+            value={amount}
+          />
+          <div className=" mt-4 flex justify-center">
+            <Button
+              onClick={async () => {
+                const status = await p2ptransaction(
+                  number,
+                  Number(amount) * 100
+                );
+                setamount("");
+                setnumber("");
+                if (status.message == "payemnt success") {
+                  alert("payment done successfully");
+                } else if (status.message == "transaction failed") {
+                  alert("sorry cant process transaction");
+                } else if (status.message == "User Not Found") {
+                  alert("invalid user");
+                }
               }}
-              value={number}
-            />
-            <TextInput
-              placeholder={"Amount"}
-              label="Amount"
-              onChange={(value) => {
-                setamount(value);
-              }}
-              value={amount}
-            />
-            <div className=" mt-4 flex justify-center">
-              <Button
-                onClick={async () => {
-                  const status = await p2ptransaction(
-                    number,
-                    Number(amount) * 100
-                  );
-                  setamount("");
-                  setnumber("");
-                  if (status.message == "payemnt success") {
-                    alert("payment done successfully");
-                  } else if (status.message == "transaction failed") {
-                    alert("sorry cant process transaction");
-                  } else if (status.message == "User Not Found") {
-                    alert("invalid user");
-                  }
-                }}
-              >
-                Send Money
-              </Button>
-            </div>
+            >
+              Send Money
+            </Button>
           </div>
-        </Card>
-      </Center>
+        </div>
+      </Card>
     </div>
   );
 };
